@@ -9,6 +9,7 @@ app = Flask(__name__, static_url_path='/static/')
 
 @app.route('/')
 def hello_world():
+    print("loading main function")
     items = {
         "آلاء": ["آلاق"],
         "أب": ["عب"],
@@ -2232,8 +2233,8 @@ def hello_world():
     }
 
     random_item = get_random_item_from_dict(items)
+    print(f"calling forvo for {random_item[0]}")
     mp3_path = call_forvo(random_item[0])
-    # mp3_path = ""
 
     spelling_alternatives = [
         [random_item[0], True]
@@ -2253,6 +2254,7 @@ def call_forvo(word='أبو سمبل'):
     key = os.environ.get('FORVO_KEY')
     url = f"https://apifree.forvo.com/key/{key}/format/json/action/word-pronunciations/word/{word}/language/arz"
     response = requests.get(url)
+    print("Response:", response)
 
     # check if the response is successful
     if response.status_code == 200:
