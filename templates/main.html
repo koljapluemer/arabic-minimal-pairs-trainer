@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabic Minimal Pairs</title>
+</head>
+<body>
+    <audio controls>
+        <source src="{{mp3_path}}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- make links for all spelling_alternatives, if their value is True its the correct answer -->
+    <ul>
+        {% for spelling, is_correct in spelling_alternatives.items() %}
+            <li>
+                <a href="/">{{spelling}}</a>
+            </li>
+        {% endfor %}
+
+</body>
+</html>
