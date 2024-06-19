@@ -1,0 +1,3 @@
+- implement the gh style feedback, should be in some old gh version
+- track which exercises are hard
+- give personal stats, also which letters are especially hard
