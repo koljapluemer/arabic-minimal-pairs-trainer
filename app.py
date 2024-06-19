@@ -2232,17 +2232,19 @@ def hello_world():
     }
 
     random_item = get_random_item_from_dict(items)
-    print("random_item: ", random_item[0])
     mp3_path = call_forvo(random_item[0])
     # mp3_path = ""
 
-    spelling_alternatives = {
-        random_item[0]: True
-    }
-    for i, alternative in enumerate(random_item[1]):
-        spelling_alternatives[alternative] = False
-        if i > 2:
+    spelling_alternatives = [
+        [random_item[0], True]
+    ]
+    for alternative in random_item[1]:
+        spelling_alternatives.append([alternative, False])
+        if len(spelling_alternatives) >= 4:
             break
+
+    random.shuffle(spelling_alternatives)
+
 
     return render_template('main.html', mp3_path=mp3_path, spelling_alternatives=spelling_alternatives)
 

@@ -1,23 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arabic Minimal Pairs</title>
-</head>
-<body>
-    <audio controls>
-        <source src="{{mp3_path}}" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
 
-    <!-- make links for all spelling_alternatives, if their value is True its the correct answer -->
-    <ul>
-        {% for spelling, is_correct in spelling_alternatives.items() %}
-            <li>
-                <a href="/">{{spelling}}</a>
-            </li>
-        {% endfor %}
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="flex flex-col items-center">
+
+    <main class="">
+        <div class="card m-4 bg-gray-900">
+            <div class="card-body">
+                <h2 class="card-title my-2 text-2xl">What is the correct spelling?</h2>
+
+                <audio controls class="my-8">
+                    <source src="{{mp3_path}}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+
+                <div class="grid grid-cols-2 gap-4">
+                    {% for variation in spelling_alternatives %}
+                    <button class="btn text-3xl" href="/" data-correct="{{variation[1]}}" onclick="checkAnswer(this)">
+                        {{variation[0]}}</btn>
+                        {% endfor %}
+                </div>
+
+
+            </div>
+            <!-- link reloading the page and thus going to next item, initially hidden -->
+            <a href="/" class="hidden btn btn-primary mt-10" id="next-link">Next Exercise</a>
+        </div>
+    </main>
 
 </body>
+
+<script>
+    function checkAnswer(button) {
+        const correct = button.getAttribute('data-correct');
+        const buttons = document.querySelectorAll('.btn');
+        if (correct === 'True') {
+            buttons.forEach(b => b.disabled = true);
+            button.classList.add('btn-success');
+            button.disabled = false;
+            document.getElementById('next-link').classList.remove('hidden');
+        } else {
+            button.classList.add('btn-error');
+        }
+    }
+
+</script>
+
 </html>
