@@ -2254,7 +2254,7 @@ def call_forvo(word='أبو سمبل'):
     key = os.environ.get('FORVO_KEY')
     url = f"https://apifree.forvo.com/key/{key}/format/json/action/word-pronunciations/word/{word}/language/arz"
     response = requests.get(url)
-    print("Response:", response)
+    print("Response:", response, response.text)
 
     # check if the response is successful
     if response.status_code == 200:

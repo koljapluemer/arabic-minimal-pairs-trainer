@@ -1,3 +1,6 @@
 - implement the gh style feedback, should be in some old gh version
 - track which exercises are hard
 - give personal stats, also which letters are especially hard
+- limit items to have under like 12 letters (or smth)
+- add option to check dictionary, if easy
+- add other dialects?
