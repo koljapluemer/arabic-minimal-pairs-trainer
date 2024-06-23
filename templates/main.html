@@ -13,6 +13,7 @@
 <body class="flex flex-col items-center">
 
     <main class="">
+        <div id="score-holder" class="flex gap-2 justify-center mt-10"></div>
         <div class="card m-4 bg-gray-900">
             <div class="card-body">
                 <h2 class="card-title my-2 text-2xl">What is the correct spelling?</h2>
@@ -42,6 +43,30 @@
 </body>
 
 <script>
+    // check if scoreArray exists in localStorage, if not, set []
+    if (!localStorage.getItem('scoreArray')) {
+        localStorage.setItem('scoreArray', JSON.stringify([]));
+    }
+
+    let trialsNeededForCurrentItem = 0;
+
+    // generate colored rects in #score-holder for every item in scoreArray
+    // 0: green box, 1: yellow box, >=2: red box
+    const scoreArray = JSON.parse(localStorage.getItem('scoreArray'));
+    scoreArray.forEach(score => {
+        const rect = document.createElement('div');
+        rect.classList.add('w-4', 'h-4');
+        if (score === 0) {
+            rect.classList.add('bg-green-500');
+        } else if (score === 1) {
+            rect.classList.add('bg-yellow-500');
+        } else {
+            rect.classList.add('bg-red-500');
+        }
+        document.getElementById('score-holder').appendChild(rect);
+    });
+    
+
     function checkAnswer(button) {
         const correct = button.getAttribute('data-correct');
         const buttons = document.querySelectorAll('.btn');
@@ -50,8 +75,19 @@
             button.classList.add('btn-success');
             button.disabled = false;
             document.getElementById('next-link').classList.remove('hidden');
+            // add score to localStorage
+            const scoreArray = JSON.parse(localStorage.getItem('scoreArray'));
+            console.log('parsed', scoreArray);
+            scoreArray.push(trialsNeededForCurrentItem);
+            // limit array to last 10 items
+            if (scoreArray.length > 10) {
+                scoreArray.shift();
+            }
+            localStorage.setItem('scoreArray', JSON.stringify(scoreArray));
+            console.log(scoreArray);
         } else {
             button.classList.add('btn-error');
+            trialsNeededForCurrentItem++;
         }
     }
 
